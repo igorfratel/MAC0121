@@ -1,0 +1,42 @@
+O algoritmo: A cada rodada, o programa verifica se alguém ganhou. Em caso negativo prossegue verificando todas as células e dando pontuações a elas baseado em parâmetros descritos abaixo.
+
+Verificação de vitória: o algoritmo realiza uma busca em largura pelas células do tabuleiro e suas vizinhas, partindo de uma das bordas e utilizando uma matriz the células visitadas, para evitar loops. 
+Exemplo: se uma célula preta na coluna 0 possui uma sequência de vizinhas da mesma cor que chegam à coluna 13, então o jogador
+preto ganhou. Através da busca em profundidade conseguimos verificar todos os vizinhos das células observadas. Portanto, se tal sequência ganhadora existe, o algoritmo à encontrará.
+
+Pontuação: a função evaluateBoard dá as pontuações para as células vazias.
+Se uma célula é o próximo elo na sequência¹ de pontes atacante, ela recebe
+pontuação 2. 
+Se uma célula for uma ponte de uma sequência garantida, ela recebe pontuação 3.
+Se uma célula faz parte de uma ponte² ameaçada, ela recebe pontuação 3.
+Se uma célula está nas linhas ou colunas 2 ou 11, verificamos se há alguma sequência inimiga avançando em direção à célula. Se sim, a célula recebe pontuação 3.
+Finalmente, caso uma célula nas linhas ou colunas³ 2 ou 11 está ocupada por um inimigo, as células adjacentes à ela em direção às bordas mais próximas recebem pontuação 1.
+
+Pie rule: quando jogando como preto, o programa só não executa a pie rule quando o jogador branco posicionou sua peça nos
+ângulos agudos do tabuleiro, pois essas posições não são vantajosas (elas maximizam a distância entre as bordas).
+
+¹Sequência de pontes: o programa busca realizar uma sequência de pontes² partindo de uma das bordas e chegando na borda oposta.
+Para isso, ele armazena os elos(links) da sequência em uma lista ligada. Caso uma sequência seja inviabilizada, o programa
+começa uma nova sequência a partir de uma borda. Uma sequência garantida é uma sequência de pontes que vai de uma borda à
+outra. Caso o programa consiga realizar tal sequência, ele começa a preencher as pontes para conectar todas as células
+e ganhar o jogo.
+
+²Pontes: durante minha pesquisa para a realização do EP, percebi que é ineficiente jogar uma peça em uma posição
+adjacente a outra peça da mesma cor, pois podemos jogá-la de forma que a sequência entre as duas seja garantida,
+mesmo que elas não sejam adjacentes. Isso porque, para um par de células que formam uma ponte, há sempre duas posições
+vazias entre as células de forma que o preenchimento de qualquer uma das duas conectará as células.
+Uma ponte ameaçada é uma ponte onde uma das duas posições livres foi preenchida pelo oponente. Dessa forma, a outra posição
+livre deve ser preenchida para garantir a conexão.
+
+³Colunas e linhas 2 e 11: a "moldura" formada pelas linhas e colunas 2 e 11 me pareceram importantes.
+Por esse motivo o programa procura "defender" elas. A justificativa para isso é que uma célula colocada nessa
+"moldura" tem uma grande facilidade de chegar na borda mais próxima, pois ela possui duas pontes possíveis
+até a borda.
+
+Creio que a principal fraqueza do meu programa é o fato de ele não verificar as possíveis jogadas do oponente, para
+realizar a jogada ótima. Além disso, o programa utiliza apenas uma sequência como ataque e, se essa sequência for perdida (uma de suas pontes for ocupada completamente pelo oponente) o programa tenta construir outra ponte "do zero". 
+
+
+
+      
+    
